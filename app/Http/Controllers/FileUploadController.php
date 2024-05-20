@@ -35,18 +35,33 @@ class FileUploadController extends Controller
         // $path = $request->berkas->storeAs('uploads',$namaFile);
         // echo "Proses upload berhasil, file berada di: $path";
 
-        $request->validate([
-            'berkas' => 'required|file|image|max:5000',
-        ]);
-        $extfile = $request->berkas->getClientOriginalName();
-        $namaFile='web-' .time(). ".".$extfile;
-        $path = $request->berkas->storeAs('public',$namaFile);
-       // echo "Proses upload berhasil, file berada di: $path";
+    //     $request->validate([
+    //         'berkas' => 'required|file|image|max:5000',
+    //     ]);
+    //     $extfile = $request->berkas->getClientOriginalName();
+    //     $namaFile='web-' .time(). ".".$extfile;
+    //     $path = $request->berkas->storeAs('public',$namaFile);
+    //    // echo "Proses upload berhasil, file berada di: $path";
 
-        $pathBaru=asset('storage'.$namaFile);
-        echo "Proses upload berhasil,data disimpan pada:$path";
-        echo "<br>";
-        echo "Tampilkan link:<a href='$pathBaru'>$pathBaru</a>";
+    //     $pathBaru=asset('storage'.$namaFile);
+    //     echo "Proses upload berhasil,data disimpan pada:$path";
+    //     echo "<br>";
+    //     echo "Tampilkan link:<a href='$pathBaru'>$pathBaru</a>";
+
+    $request->validate([
+        'berkas' => 'required|file|image|max:5000',
+    ]);
+    $extfile = $request->berkas->getClientOriginalName();
+    $namaFile='web-' .time(). ".".$extfile;
+
+    $path = $request->berkas->move('gambar',$namaFile);
+    $path = str_replace("\\","//",$path);
+    echo "variabel path berisi:$path <br>";
+
+    $pathBaru=asset('gambar/'.$namaFile);
+    echo "Proses upload berhasil,data disimpan pada:$path";
+    echo "<br>";
+    echo "Tampilkan link:<a href='$pathBaru'>$pathBaru</a>";
 
        // echo $request->berkas->getClientOriginalName(). "lolos validasi";
 
